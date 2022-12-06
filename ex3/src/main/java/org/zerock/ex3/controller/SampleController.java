@@ -23,12 +23,22 @@ public class SampleController {
 
 
     @GetMapping({"/ex2"})
-    public void exModel(Model model) {
-        List<SampleDTO> list = IntStream.rangeClosed(1, 20).asLongStream().mapToObj(i -> {
-            SampleDTO dto = SampleDTO.builder().sno(i).first("First.." + i).last("Last.." + i).regTime(LocalDateTime.now()).build();
-            return dto;
-        }).collect(Collectors.toList());
+//    public void exModel(Model model) {
+//        List<SampleDTO> list = IntStream.rangeClosed(1, 20).asLongStream().mapToObj(i -> {
+//            SampleDTO dto = SampleDTO.builder().sno(i).first("First.." + i).last("Last.." + i).regTime(LocalDateTime.now()).build();
+//            return dto;
+//        }).collect(Collectors.toList());
+//        model.addAttribute("list", list);
+//    } 책에 나온 내용
+    public void ex2(Model model) {
+        log.info("ex..........");
+        SampleDTO dto = SampleDTO.builder().regTime(LocalDateTime.now()).build();
+        List<SampleDTO> list = IntStream.rangeClosed(1, 20).asLongStream().mapToObj(i ->
+                dto.toBuilder().sno(i).first("First...." + i).last("Last..." + i).build()
+        ).collect(Collectors.toList());
+        log.info(list);
         model.addAttribute("list", list);
     }
+
 }
 

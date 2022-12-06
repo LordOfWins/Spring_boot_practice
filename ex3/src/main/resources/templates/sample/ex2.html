@@ -6,7 +6,10 @@
 </head>
 <body>
 <ul>
-    <li th:each="dto: ${list}">[[${dto}]]</li>
+    <li th:each="dto, status: ${list}">
+        <span th:if="${dto.sno%5==0}" th:text="${'------------'+dto.sno}"></span>
+        <span th:unless="${dto.sno%5==0}" th:text="${dto.first}"></span>
+    </li>
 </ul>
 </body>
 </html>

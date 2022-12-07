@@ -6,9 +6,13 @@
 </head>
 <body>
 <ul>
-    <li th:each="dto, status: ${list}">
-        <span th:if="${dto.sno%5==0}" th:text="${'------------'+dto.sno}"></span>
-        <span th:unless="${dto.sno%5==0}" th:text="${dto.first}"></span>
+    <th:block th:each="dto: ${list}">
+        <li><a th:href="@{'/ex4/'+${dto.sno}(first=${dto.sno})}">[[${dto}]]</a></li>
+        <h3 th:text="${#temporals.format(dto.regTime,'yyyy/MM/dd')}"></h3>
+<!--        <li th:text="${dto.sno%5==0}?${dto.sno}:${dto.first}"></li>-->
+    </th:block>
+    <li th:each="dto, status: ${list}"
+        th:text="${dto.sno%5==0}?${dto.sno}:'red'">[[${dto}]]
     </li>
 </ul>
 </body>

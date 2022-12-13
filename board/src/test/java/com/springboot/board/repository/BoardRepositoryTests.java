@@ -24,7 +24,7 @@ class BoardRepositoryTests {
 
     @Test
     void insertBoard() {
-        IntStream.rangeClosed(1, 100).forEach(i -> {
+        IntStream.rangeClosed(1, 200).forEach(i -> {
             Member member = Member.builder().email("user" + i + "@aaa.com").build();
             Board board = Board.builder().title("Title..." + i).content("Content..." + i).writer(member).build();
             boardRepository.save(board);
@@ -69,5 +69,9 @@ class BoardRepositoryTests {
 
         Object[] objects = (Object[]) object;
         System.out.println(Arrays.toString(objects));
+    }
+    @Test
+    public void testSearch1(){
+        boardRepository.search1();
     }
 }

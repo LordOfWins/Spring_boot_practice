@@ -20,8 +20,11 @@ public interface BoardService {
     default Board dtoToEntity(BoardDTO dto) {
         Member member = Member.builder().email(dto.getWriterEmail()).build();
 
-        return Board.builder().bno(dto.getBno()).title(dto.getTitle())
-                .content(dto.getContent()).writer(member).build();
+        return Board.builder()
+                .bno(dto.getBno())
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .writer(member).build();
     }
 
     default BoardDTO entityToDTO(Board board, Member member, Long replyCount) {

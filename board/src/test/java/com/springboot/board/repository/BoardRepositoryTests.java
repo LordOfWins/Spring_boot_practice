@@ -74,4 +74,12 @@ class BoardRepositoryTests {
     public void testSearch1(){
         boardRepository.search1();
     }
+
+    @Test
+    public void testSearchPage(){
+        Pageable pageable=PageRequest.of(0,10,Sort.by("bno").descending().and(Sort.by("title").ascending()));
+        Page<Object[]> result=boardRepository.searchPage("twc", "1", pageable);
+        System.out.println(result);
+    }
+
 }

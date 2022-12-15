@@ -9,6 +9,7 @@ import com.springboot.board.repository.BoardRepository;
 import com.springboot.board.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -36,8 +37,8 @@ public class BoardServiceImpl implements BoardService {
     public PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
         log.info(pageRequestDTO);
         Function<Object[], BoardDTO> fn = (en -> entityToDTO((Board) en[0], (Member) en[1], (Long) en[2]));
-        Page<Object[]> result = repository
-                .getBoardWithReplyCount(pageRequestDTO.getPageable(Sort.by("bno").descending()));
+        Page<Object[]> result=repository.getBoardWithReplyCount(
+                pageRequestDTO.getPageable(Sort.by("bno").descending()));
         return new PageResultDTO<>(result, fn);
     }
 
@@ -57,7 +58,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public void modify(BoardDTO boardDTO) {
+    public void modify(@NotNull BoardDTO boardDTO) {
         Board board = repository.getReferenceById(boardDTO.getBno());
         board.changeTitle(boardDTO.getTitle());
         board.changeContent(boardDTO.getContent());

@@ -25,13 +25,13 @@ public class ClubLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("----------------------");
+        log.info("--------------------------------------");
         log.info("onAuthenticationSuccess");
-        ClubAuthMemberDTO authMemberDTO = (ClubAuthMemberDTO) authentication.getPrincipal();
-        boolean fromSocial = authMemberDTO.isFromSocial();
+        ClubAuthMemberDTO authMember = (ClubAuthMemberDTO)authentication.getPrincipal();
+        boolean fromSocial = authMember.isFromSocial();
         log.info("Need Modify Member?" + fromSocial);
-        boolean passwordResult = passwordEncoder.matches("1111", authMemberDTO.getPassword());
-        if (fromSocial && passwordResult) {
+        boolean passwordResult = passwordEncoder.matches("1111", authMember.getPassword());
+        if(fromSocial && passwordResult) {
             redirectStrategy.sendRedirect(request, response, "/member/modify?from=social");
         }
     }

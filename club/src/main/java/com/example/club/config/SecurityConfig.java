@@ -28,14 +28,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(auth -> {
-            auth.antMatchers("/sample/all").permitAll();
-            auth.antMatchers("/sample/member").hasRole("USER");
-        });
+//        httpSecurity.authorizeHttpRequests(auth -> {
+//            auth.antMatchers("/sample/all").permitAll();
+//            auth.antMatchers("/sample/member").hasRole("USER");
+//        });
         httpSecurity.formLogin();
         httpSecurity.csrf().disable();
         httpSecurity.logout();
         httpSecurity.oauth2Login().successHandler(successHandler());
+        httpSecurity.rememberMe().tokenValiditySeconds(60 * 60 * 24 * 7)
+                .userDetailsService(userDetailsService);
         return httpSecurity.build();
     }
 

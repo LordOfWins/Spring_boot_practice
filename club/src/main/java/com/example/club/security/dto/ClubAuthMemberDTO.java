@@ -18,28 +18,31 @@ import java.util.Map;
 public class ClubAuthMemberDTO extends User implements OAuth2User {
 
     private String email;
+
+    private String password;
     private String name;
     private boolean fromSocial;
 
     private Map<String, Object> attr;
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof User) {
-            return super.getUsername().equals(((User) obj).getUsername());
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.getUsername().hashCode();
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (obj instanceof User) {
+//            return super.getUsername().equals(((User) obj).getUsername());
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return super.getUsername().hashCode();
+//    }
 
     public ClubAuthMemberDTO(String username, String password, boolean fromSocial,
                              Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.email = username;
+        this.password=password;
         this.fromSocial = fromSocial;
     }
 
@@ -56,4 +59,5 @@ public class ClubAuthMemberDTO extends User implements OAuth2User {
     public Map<String, Object> getAttributes() {
         return this.attr;
     }
+
 }

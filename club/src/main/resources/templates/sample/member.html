@@ -11,7 +11,7 @@
 <div sec:authorize="hasRole('ADMIN')">Has ADMIN ROLE</div>
 <div sec:authorize="isAuthenticated()">Only Authenticated user can see this test</div>
 Authenticated username:
-<div sec:authentication="principal.username"></div>
+<div sec:authentication="principal.name"></div>
 Authenticated user roles:
 <div sec:authentication="principal.authorities"></div>
 </body>

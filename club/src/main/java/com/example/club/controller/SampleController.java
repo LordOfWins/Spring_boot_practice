@@ -18,6 +18,8 @@ public class SampleController {
         log.info("exAll...........");
     }
 
+
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/member")
     public void exMember(@AuthenticationPrincipal ClubAuthMemberDTO clubAuthMemberDTO) {
         log.info("exMember.......");

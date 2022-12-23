@@ -5,6 +5,7 @@ import com.example.club.security.filter.ApiCheckFilter;
 import com.example.club.security.filter.ApiLoginFilter;
 import com.example.club.security.handler.ClubLoginSuccessHandler;
 import com.example.club.security.service.ClubUserDetailsService;
+import com.example.club.security.util.JWTUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,7 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         //Get AuthenticationManager
-        AuthenticationManager authenticationManager=authenticationManagerBuilder.build();
+        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
         httpSecurity.authenticationManager(authenticationManager);
         httpSecurity.formLogin();
         httpSecurity.csrf().disable();
@@ -50,9 +51,13 @@ public class SecurityConfig {
     }
 
     public ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception{
-        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
+        ApiLoginFilter apiLoginFilter =  new ApiLoginFilter("/api/login", jwtUtil());
         apiLoginFilter.setAuthenticationManager(authenticationManager);
         return apiLoginFilter;
+    }
+    @Bean
+    public JWTUtil jwtUtil() {
+        return new JWTUtil();
     }
 
     @Bean
@@ -62,6 +67,6 @@ public class SecurityConfig {
 
     @Bean
     public ApiCheckFilter apiCheckFilter() {
-        return new ApiCheckFilter("/notes/**/*");
+        return new ApiCheckFilter("/notes/**/*", jwtUtil());
     }
 }
